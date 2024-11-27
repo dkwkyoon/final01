@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>위로의 조각</title>
+  <style>
+
+    @font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: left;
+      word-break: break-word;
+      font-family: 'SUIT-Regular';
+    }
+
+    .wrap {
+      position: relative;
+      width: 100%;
+      transform: scale(0.7);
+      transform-origin: center;
+    }
+
+    .poster {
+      position: relative; 
+      margin: auto;
+      width: 760px;
+      height: 1060px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+      background-image: url(po.png);
+      background-size: cover;
+    }
+
+    img {
+      position: absolute;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      transform: translate(-50%, -50%);
+      height: 180px;
+      width: auto;
+    }
+
+
+
+    img:hover {
+      transform: translate(-50%, -50%) scale(1.3);
+    }
+
+   .modal {
+      display: none; /* 기본적으로 숨김 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border: solid black 1.5px;
+      text-align: center;
+      width: 500px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      
+    }
+
+      .modal-images {
+      flex-wrap: wrap;
+      gap: 20px;
+      
+    }
+
+    .modal img {
+      width: 200px;
+      height: auto;
+    }
+
+    .modal-text {
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.36;
+      color: #333;
+      text-align: left;
+      word-break: keep-all;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      color: black;
+      font-weight: bold;
+    }
+
+    .modal img:hover {
+     transform: translate(-50%, -50%) scale(1.0);
+
+
+    .modal-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="poster"></div>
+</div>
+
+  <div class="modal" id="modal1">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal1">&times;</span>
+      <div class="modal-box" id="modal-box1"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal2">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal2">&times;</span>
+      <div class="modal-box" id="modal-box2"></div>
+    </div>
+  </div>
+
+   <div class="modal" id="modal3">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal3">&times;</span>
+      <div class="modal-box" id="modal-box3"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal4">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal4">&times;</span>
+      <div class="modal-box" id="modal-box4"></div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="modal5">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal5">&times;</span>
+      <div class="modal-box" id="modal-box5"></div>
+    </div>
+  </div>
+
+   <div class="modal" id="modal6">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal6">&times;</span>
+      <div class="modal-box" id="modal-box6"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal7">
+    <div class="modal-content">
+      <span class="modal-close" data-modal="modal7">&times;</span>
+      <div class="modal-box" id="modal-box7"></div>
+    </div>
+  </div>
+
+
+<script>
+  const colors = [
+    '#000000', '#001f3f', '#003f7f', '#005fbf', '#007fff', '#0098ff', '#00b7ff', '#00d4ff', '#00f1ff',
+    '#ffdb00', '#ffcc00', '#ff9900', '#ff6600', '#ff5733', '#ff4d00', '#ff3000', '#ba2706'
+  ]; //색바꾸깅~
+
+  const images = [
+    { normal: 'image1.png', hover: 'img1.png', popup: { imgs: ['1.jpg'], text: '상경 후 혼자 살면서 가장 힘든 건 무엇일까. 벌레 잡는 것? 식구가 없는 것? 혼자 있을 때 오는 적막감? 혼자 집을 치우고 가꿔야 한다는 것? 넷 다 아니다. 밖에서 이런저런 일로 치이고 집에 들어갔을 때 아무도 없는 것이 가장 힘들다. 투정 부릴 사람도, 감정을 털어놓을 사람이 없다는 거, 누군가가 집에 없다는 게 없다는 게. 이런 날 집이 어질러져 있다면 더욱 서럽다.<br><br>작년에 유달리 이유 없이 힘든 날이 있었다. 누군가에게 털어놓기에는 한계가 있고, 사람이 가장 편안한 공간이라고 불리는 집에는 삭막함만 있을 뿐이고. 떼지지 않는 발걸음을 옮기며 집앞에 도착했다. 우리 집 우편함에 정체 모를 한 장의 종이가 들어 있었다. 늘 그렇듯, 나약한 사람을 채찍질하는 헬스장 광고, 누군가를 믿으라는 광고, 내가 살 수 있는 공간은 없는 아파트 광고 중 하나라고 생각하며 신경질적으로 그 종이를 뽑으려던 순간…. 내가 알고 있던 광고지와 촉감이 달라 조심스럽게 뽑았다.<br><br>종이의 정체는 바로, 엄마의 엽서였다. 나를 향한 애정과 믿음이 가득한 편지에 눈앞이 뿌얘… 질 뻔했지만 집이 아닌 공간에서 울 수는 없기에 빠르게 엘리베이터를 타고 올라갔다. 올라가는 내내 그 엽서를 읽고, 또 읽고. 누군가가 주는 무조건적인 애정과 믿음이 이렇게 크게 작용할 수 있다는 걸 다시 한번 깨닫는 순간이었다. <br><br>이후로도 나는 이유 없이 힘들거나, 지칠 때면 엄마가 써 준 엽서를 보곤 한다. 엄마가 토닥여 주는 기분에 어디선가 자신감이 올라와 뭐든 할 수 있을 것 같은 기분이 든다. ' }},
+    { normal: 'image2.png', hover: 'img2.png', popup: { imgs: ['2.png'], text: '감동을 준 영화. 원더 등등...' } },
+    { normal: 'image3.png', hover: 'img3.png', popup: { imgs: ['3.png'], text: '기분이 안 좋을 때 단것만한 게 없다.' } },
+    { normal: 'image4.png', hover: 'img4.png', popup: { imgs: ['51.jpg', '52.jpg', '53.jpg','54.jpg','55.jpg'], text:'난 슬플 때 힙합을 들어....<br><br> 아니, 난 슬플 때 이 노래를 들어.... <br> <br>' } },
+    { normal: 'image5.png', hover: 'img5.png', popup: { imgs: ['5.jpg',], text: '귀여운 것이 세상을 구한다.' } },
+    { normal: 'image6.png', hover: 'img6.png', popup: { imgs: ['img6-1.png'], text: '어딘가 지쳐 있을 때는 침대에 누워 있는 게 최고다. 굳이 잠을 자지 않더라도, 갓 빨래한 이불을 덮고 누우면 천국이 따로 없다. 전기장판까지 켠다면 그 어떤 위로보다 효과가 빠르다.' } },
+    { normal: 'image7.png', hover: 'img7.png', popup: { imgs: ['img7-1.png'], text: '내 휴대폰 갤러리에는 위로를 주거나 용기를 북돋아주는 사진들이 있다.' } },
+  ]; //호버
+
+
+
+  /*popup: { imgs: ['img1-1.png', 'img1-2.png', 'img1-3.png'], text: '이 이미지는 당신의 마음을 위로하기 위해 만들어졌습니다.' }
+{ imgs: ['img2-1.png'], text: '이 팝업에는 또 다른 이야기가 담겨 있습니다.' } }
+  */ // 두장 이상 / 한장이상
+
+
+ 
+  const positions = [
+    { left: '24%', top: '33%', height: '330px' }, // 편지
+    { left: '82%', top: '28%', height: '170px' }, // 영화
+    { left: '63%', top: '46%', height: '270px'  }, // 케이크
+    { left: '26%', top: '66%', height: '310px' }, // mp3
+    { left: '64%', top: '70%' }, // 인형
+    { left: '46%', top: '90%' }, // 침대
+    { left: '87%', top: '85%', height: '210px'}  // 폰
+  ];
+
+   const modalCloseButtons = document.querySelectorAll('.modal-close');
+
+    modalCloseButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const modalId = button.getAttribute('data-modal');
+        document.getElementById(modalId).style.display = 'none';
+      });
+    });
+
+  let currentIndex = 0; //색바뀌는거임!!
+
+  function createImageElements() {
+    const posterElement = document.querySelector('.poster'); 
+
+       images.forEach((imageData, index) => {
+      const imgElement = document.createElement('img');
+      imgElement.src = imageData.normal; 
+      imgElement.style.left = positions[index].left;
+      imgElement.style.top = positions[index].top;
+      imgElement.style.height = positions[index].height;
+
+
+      imgElement.addEventListener('click', () => {
+        if (currentIndex < colors.length) {
+          document.body.style.backgroundColor = colors[currentIndex];
+          currentIndex++;
+        }
+      }); //색바꾸기
+
+       imgElement.addEventListener('mouseover', () => {
+        imgElement.src = imageData.hover; 
+      });
+      imgElement.addEventListener('mouseout', () => {
+        imgElement.src = imageData.normal; 
+      }); //호버
+
+
+     imgElement.addEventListener('click', () => {
+          const modal = document.getElementById(`modal${index + 1}`);
+          const modalBox = document.getElementById(`modal-box${index + 1}`);
+          modalBox.innerHTML = '';
+
+        imageData.popup.imgs.forEach((imgSrc) => {
+            const modalImg = document.createElement('img');
+            modalImg.src = imgSrc;
+            modalBox.appendChild(modalImg);
+          });
+
+        const textElement = document.createElement('p');
+        textElement.classList.add('modal-text');
+        textElement.innerHTML = imageData.popup.text;
+        modalBox.appendChild(textElement);
+
+
+
+        modal.style.display = 'flex';
+      });
+
+      posterElement.appendChild(imgElement);
+    });
+  }
+
+
+  createImageElements();
+
+
+</script>
+</body>
+</html>
